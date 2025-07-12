@@ -1,83 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>J'Kim Jamil Laureno Cagas | Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="J'Kim QR Code Generator - Generate and download QR codes instantly." />
+  <meta name="keywords" content="QR code, generator, J'Kim, download QR" />
+  <meta name="author" content="J'Kim" />
+  <meta property="og:title" content="J'Kim QR Code Generator" />
+  <meta property="og:description" content="Generate QR codes quickly and download them as images." />
+  <title>J'Kim QR Code Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #333;
+      --accent-color: #f0a500;
+      --background-color: #f3f3f3;
+      --text-color: #333;
+      --box-bg: #fff;
+      --footer-bg: #333;
+      --footer-text: #fff;
+    }
+    body.dark-mode {
+      --background-color: #121212;
+      --text-color: #e0e0e0;
+      --box-bg: #1e1e1e;
+      --footer-bg: #000;
+      --footer-text: #aaa;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    nav {
+      background: var(--primary-color);
+      color: #fff;
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav ul li a:hover {
+      color: var(--accent-color);
+    }
+    header {
+      background-color: var(--primary-color);
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.95;
+    }
+    main {
+      padding: 50px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .qr-box {
+      width: 100%;
+      max-width: 600px;
+      background-color: var(--box-bg);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      transition: background-color 0.3s;
+      text-align: center;
+    }
+    .qr-box h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      color: var(--primary-color);
+    }
+    input[type="text"] {
+      width: 100%;
+      max-width: 400px;
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .qr-box button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .qr-box button:hover {
+      background-color: var(--accent-color);
+    }
+    #qrcode {
+      margin-top: 30px;
+    }
+    #downloadBtn {
+      display: none;
+      margin-top: 15px;
+      padding: 8px 16px;
+      background-color: var(--accent-color);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+    .theme-toggle {
+      margin: 40px 0 10px;
+      text-align: center;
+    }
+    .theme-toggle button {
+      background: transparent;
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .theme-toggle button:hover {
+      background: var(--text-color);
+      color: var(--background-color);
+    }
+    .about-section {
+      max-width: 800px;
+      padding: 40px 20px;
+      text-align: center;
+      background-color: var(--box-bg);
+      margin-top: 60px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    .about-section h2 {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+    .about-section p {
+      font-size: 1.1rem;
+      color: var(--text-color);
+      line-height: 1.8;
+    }
+    footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      padding: 25px 10px;
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
+  <nav>
+    <ul>
+      <li><a href="https://jkimcagas.com" target="_blank">Home</a></li>
+      <li><a href="#qr">QR Generator</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#theme">Theme</a></li>
+    </ul>
+  </nav>
 
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact Me</a></li>
-        </ul>
-    </nav>
+  <header>
+    <h1>J'Kim QR Code Generator</h1>
+    <p>Generate and download QR codes instantly. No signup, no hassle.</p>
+  </header>
 
-    <section id="home" class="section">
-        <div class="intro">
-            <img src="picture.jpg" alt="Profile Picture" class="profile-pic" />
-            <h1>J'Kim Jamil Laureno Cagas</h1>
-            <p>Video Editor | Basic Programmer | Digital Artist | Vlogger</p>
-        </div>
-    </section>
+  <main id="qr">
+    <div class="qr-box">
+      <h2>Generate Your QR Code</h2>
+      <input type="text" id="text" placeholder="Enter text or URL" />
+      <button onclick="generateQRCode()">Generate</button>
+      <div id="qrcode"></div>
+      <a id="downloadBtn" download="qrcode.png">⬇️ Download QR Code</a>
+    </div>
 
-    <section id="about" class="section">
-        <h2>About Me</h2>
-        <p>Hello! I'm J'Kim, a 21-year-old student at Dalubhasaan ng Lungsod ng Lucena, currently pursuing a degree in BS Public Administration. I am passionate about video editing, digital art, basic programming, and vlogging. I love learning, creating, and sharing my work with others.</p>
-    </section>
+    <div class="theme-toggle" id="theme">
+      <button onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
+    </div>
 
-    <section id="services" class="section">
-        <h2>Services</h2>
-        <div class="services-container">
-            <div class="service">
-                <h3><a href="https://tools.jkimcagas.com/qr-code.html" target="_blank">QR Code Generator</a></h3>
-                <p>Generate custom QR codes for links, text, and more in seconds.</p>
-            </div>
-            <div class="service">
-                <h3><a href="https://tools.jkimcagas.com/speed-test.html" target="_blank">Internet Speed Test</a></h3>
-                <p>Test your internet connection speed quickly and accurately online.</p>
-            </div>
-            <div class="service">
-                <h3><a href="https://tools.jkimcagas.com/pass-gen.html" target="_blank">Password Generator</a></h3>
-                <p>Create strong, secure passwords instantly for your accounts and projects.</p>
-            </div>
-            <div class="service">
-                <h3><a href="https://tools.jkimcagas.com/random-picker.html" target="_blank">Random Picker</a></h3>
-                <p>Pick random names or items easily from your custom list.</p>
-            </div>
-            <div class="service">
-                <h3><a href="https://tools.jkimcagas.com/spin-the-wheel.html" target="_blank">Spin the Wheel</a></h3>
-                <p>Use a fun spinning wheel to make decisions or select options randomly.</p>
-            </div>
-        </div>
-    </section>
+    <div class="about-section" id="about">
+      <h2>About This Tool</h2>
+      <p>
+        The J'Kim QR Code Generator allows you to create QR codes instantly from any text or URL and download them as PNG images. Whether you're sharing links, contact info, or event details, this tool makes it quick and easy — all without needing any app or login.
+      </p>
+    </div>
+  </main>
 
-    <section id="contact" class="section">
-        <h2>Contact Me</h2>
-        <p>Feel free to reach out to me for collaborations or inquiries. I would love to connect with you!</p>
-        <form action="https://formsubmit.co/jkimdevs@duck.com" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" placeholder="Your Message" required></textarea>
-            <input type="text" name="_honey" style="display:none">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="thankyou.html">
-            <button type="submit">Send Message</button>
-        </form>
-    </section>
+  <footer>
+    &copy; <span id="year"></span> J'Kim QR Code Generator. All rights reserved.
+  </footer>
 
-    <footer>
-        <p>&copy; <span id="year"></span> J'Kim Jamil Laureno Cagas | All Rights Reserved</p>
-    </footer>
+  <!-- QR Code Generator Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const body = document.body;
+    const themeBtn = document.getElementById("themeBtn");
 
-    <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
+    function toggleTheme() {
+      body.classList.toggle("dark-mode");
+      themeBtn.textContent = body.classList.contains("dark-mode") ? "☀️ Light Mode" : "🌙 Dark Mode";
+    }
 
-    <script src="script.js"></script>
+    function generateQRCode() {
+      const text = document.getElementById("text").value.trim();
+      const qrContainer = document.getElementById("qrcode");
+      const downloadBtn = document.getElementById("downloadBtn");
+
+      qrContainer.innerHTML = "";
+      downloadBtn.style.display = "none";
+
+      if (text === "") return;
+
+      // Create QR code with canvas rendering
+      const qr = new QRCode(qrContainer, {
+        text: text,
+        width: 256,
+        height: 256,
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      setTimeout(() => {
+        const canvas = qrContainer.querySelector("canvas");
+        if (canvas) {
+          const dataURL = canvas.toDataURL("image/png");
+          downloadBtn.href = dataURL;
+          downloadBtn.style.display = "inline-block";
+        }
+      }, 500);
+    }
+  </script>
 </body>
 </html>
